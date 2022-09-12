@@ -4,6 +4,7 @@ import sys
 from tkinter.font import BOLD
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb 
+from analizador_lexico import analizador
 
 class VentanaPrincipal:
     
@@ -12,6 +13,7 @@ class VentanaPrincipal:
         self.agregar_menu()
         self.scrolledtext1 = st.ScrolledText(self.ventana, width=50, height=20)
         self.scrolledtext1.grid(column=0, row=0, padx=10, pady=10)
+        tk.Wm.title(self.ventana, f"Analizador léxico")
         self.ventana.mainloop()
         self.nombre_archivo = None
         
@@ -23,7 +25,7 @@ class VentanaPrincipal:
         menu_archivo.add_command(label="Abrir", command=self.abrir)
         menu_archivo.add_command(label="Guardar", command=self.guardar)
         menu_archivo.add_command(label="Guardar Como", command=self.guardar_como)
-        menu_archivo.add_command(label="Analizar")
+        menu_archivo.add_command(label="Analizar", command=self.analizar)
         menu_archivo.add_command(label="Errores")
         menu_archivo.add_command(label="Salir", command=self.salir)
         barra_menus.add_cascade(menu=menu_archivo, label="Archivo")
@@ -41,7 +43,7 @@ class VentanaPrincipal:
         sys.exit(0)
         
     def guardar_como(self):
-        self.nombre_archivo = fd.asksaveasfilename(title = "Guardar como", filetypes=(("xml files", "*.xml"), ("todos los archivos", "*.*")))
+        self.nombre_archivo = fd.asksaveasfilename(title = "Guardar como", filetypes=(("xml files", "*.txt"), ("todos los archivos", "*.*")))
         if self.nombre_archivo != "":
             archivo = open(self.nombre_archivo, "w", encoding="utf-8")
             archivo.write(self.scrolledtext1.get("1.0", tk.END))
@@ -55,12 +57,19 @@ class VentanaPrincipal:
         mb.showinfo("información", "El archivo se guardó correctamente")
     
     def abrir(self):
-        self.nombre_archivo = fd.askopenfilename(title="Seleccione el archivo", filetypes=(("xml file", "*.xml"), ("todos los arhivos", "*.*")))
+        self.nombre_archivo = fd.askopenfilename(title="Seleccione el archivo", filetypes=(("txt file", "*.txt"), ("todos los arhivos", "*.*")))
         if self.nombre_archivo != " ":
             archivo = open(self.nombre_archivo, "r", encoding="utf-8")
             contenido = archivo.read()
             archivo.close()
             self.scrolledtext1.delete("1.0", tk.END)
             self.scrolledtext1.insert("1.0", contenido)
+            
+    def analizar(self):
+        with open(self.nombre_archivo, encoding="utf-8") as archivo:
+            for linea in archivo:
+                print(linea)
+                #analizar = analizador(linea)
+                #print(analizar.etiquetaTipo())
         
 aplicacion = VentanaPrincipal()
