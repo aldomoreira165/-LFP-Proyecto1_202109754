@@ -4,7 +4,7 @@ import sys
 from tkinter.font import BOLD
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb 
-from analizador_lexico import analizador
+from etiqueta_tipo import EtiquetaTipo
 
 class VentanaPrincipal:
     
@@ -66,10 +66,14 @@ class VentanaPrincipal:
             self.scrolledtext1.insert("1.0", contenido)
             
     def analizar(self):
+        datos = []
+        num_linea = 0
         with open(self.nombre_archivo, encoding="utf-8") as archivo:
-            for linea in archivo:
-                print(linea)
-                #analizar = analizador(linea)
-                #print(analizar.etiquetaTipo())
+            lineas = archivo.readlines()
+            for linea in lineas:
+                datos.append(linea.strip("\n"))
+        
+        etiqueta_tipo = EtiquetaTipo(datos[num_linea])
+        print(etiqueta_tipo.apertura())
         
 aplicacion = VentanaPrincipal()
