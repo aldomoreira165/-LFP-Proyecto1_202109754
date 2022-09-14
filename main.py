@@ -6,6 +6,7 @@ from tkinter import filedialog as fd
 from tkinter import messagebox as mb 
 from etiqueta_tipo import EtiquetaTipo
 from etiqueta_operacion import EtiquetaOperacion
+from etiqueta_numero import EtiquetaNumero
 
 class VentanaPrincipal:
     
@@ -81,6 +82,10 @@ class VentanaPrincipal:
             etiqueta_operacion = EtiquetaOperacion(datos[num_linea])
             if etiqueta_operacion.apertura() == "Operacion=SUMA":
                 operacion = "Suma"
+                num_linea += 1
+            
+            etiqueta_numero = EtiquetaNumero(datos[num_linea])
+            print(etiqueta_numero.apertura())
             
         
 aplicacion = VentanaPrincipal()

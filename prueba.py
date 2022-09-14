@@ -1,4 +1,5 @@
 from etiqueta_operacion import EtiquetaOperacion
+from etiqueta_tipo import EtiquetaTipo
 
-a = EtiquetaOperacion("<Operacion=SUMA>")
-print(a.apertura())
+a = EtiquetaTipo("</Tipo>")
+print(a.cierre())
