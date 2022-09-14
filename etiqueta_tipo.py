@@ -25,7 +25,7 @@ class EtiquetaTipo:
                         return False
                 elif self.estado == 3:
                     if self.transicion == ">": 
-                        self.estado == 3
+                        self.estado = 3
         if cadena == "Tipo":
             return True
         else:

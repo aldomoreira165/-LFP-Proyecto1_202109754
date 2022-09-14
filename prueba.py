@@ -1,4 +1,4 @@
-from etiqueta_tipo import analizador
+from etiqueta_operacion import EtiquetaOperacion
 
-a = analizador("<Tipo>")
-print(a.etiquetas_apertura())
+a = EtiquetaOperacion("<Operacion=SUMA>")
+print(a.apertura())

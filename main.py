@@ -5,6 +5,7 @@ from tkinter.font import BOLD
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb 
 from etiqueta_tipo import EtiquetaTipo
+from etiqueta_operacion import EtiquetaOperacion
 
 class VentanaPrincipal:
     
@@ -68,12 +69,18 @@ class VentanaPrincipal:
     def analizar(self):
         datos = []
         num_linea = 0
+        operacion = None
         with open(self.nombre_archivo, encoding="utf-8") as archivo:
             lineas = archivo.readlines()
             for linea in lineas:
                 datos.append(linea.strip("\n"))
         
         etiqueta_tipo = EtiquetaTipo(datos[num_linea])
-        print(etiqueta_tipo.apertura())
+        if etiqueta_tipo.apertura() == True:
+            num_linea += 1
+            etiqueta_operacion = EtiquetaOperacion(datos[num_linea])
+            if etiqueta_operacion.apertura() == "Operacion=SUMA":
+                operacion = "Suma"
+            
         
 aplicacion = VentanaPrincipal()
