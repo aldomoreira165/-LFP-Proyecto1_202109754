@@ -74,8 +74,12 @@ class VentanaPrincipal:
         with open(self.nombre_archivo, encoding="utf-8") as archivo:
             lineas = archivo.readlines()
             for linea in lineas:
-                datos.append(linea.strip("\n"))
+                linea = linea.replace(" ", "")
+                linea = linea.replace("\n", "")
+                linea = linea.replace("\t", "")
+                datos.append(linea)
         
+        #realizando analisis del archivo por medio de los automatas finitos
         etiqueta_tipo = EtiquetaTipo(datos[num_linea])
         if etiqueta_tipo.apertura() == True:
             num_linea += 1
@@ -83,9 +87,26 @@ class VentanaPrincipal:
             if etiqueta_operacion.apertura() == "Operacion=SUMA":
                 operacion = "Suma"
                 num_linea += 1
+            else:
+                print(f"Error en la linea {num_linea+1}")
             
-            etiqueta_numero = EtiquetaNumero(datos[num_linea])
-            print(etiqueta_numero.apertura())
+            if operacion == "Suma":
+                operandos = []
+                
+                while EtiquetaOperacion(datos[num_linea]).cierre() != False:
+                    etiqueta_numero = EtiquetaNumero(datos[num_linea])
+                    retorno = etiqueta_numero.apertura()
+                    print(retorno)
+                    if retorno != False:
+                        operandos.append(retorno)
+                        num_linea += 1
+                    else:
+                        print(f"Error en la linea {num_linea+1}")
+                       
+                print(operandos)
+            
+        else:
+            print(f"Error en la linea {num_linea+1}")
             
         
 aplicacion = VentanaPrincipal()

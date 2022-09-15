@@ -1,5 +1,5 @@
 from etiqueta_operacion import EtiquetaOperacion
 from etiqueta_tipo import EtiquetaTipo
 
-a = EtiquetaTipo("</Tipo>")
-print(a.cierre())
+a = 5.3
+print(type(a))
