@@ -93,17 +93,16 @@ class VentanaPrincipal:
             if operacion == "Suma":
                 operandos = []
                 
-                while EtiquetaOperacion(datos[num_linea]).cierre() != False:
+                while EtiquetaOperacion(datos[num_linea]).cierre() != True:
                     etiqueta_numero = EtiquetaNumero(datos[num_linea])
                     retorno = etiqueta_numero.apertura()
-                    print(retorno)
                     if retorno != False:
                         operandos.append(retorno)
                         num_linea += 1
                     else:
                         print(f"Error en la linea {num_linea+1}")
                        
-                print(operandos)
+                print(operandos)                 
             
         else:
             print(f"Error en la linea {num_linea+1}")
