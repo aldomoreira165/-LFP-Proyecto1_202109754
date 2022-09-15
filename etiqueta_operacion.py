@@ -32,7 +32,11 @@ class EtiquetaOperacion:
             elif self.estado == 5:
                 if self.transicion == ">":
                     self.estado = 5
-        return cadena
+         
+        if cadena == "Operacion=SUMA":            
+            return cadena
+        else:
+            return False
     
     def cierre(self):
         cadena = ""

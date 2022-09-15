@@ -67,6 +67,23 @@ class VentanaPrincipal:
             self.scrolledtext1.delete("1.0", tk.END)
             self.scrolledtext1.insert("1.0", contenido)
             
+    def operaciones(self, num_linea, archivo):
+        datos = archivo
+        contador = 0
+        operandos = []
+        while EtiquetaOperacion(datos[num_linea]).cierre() != True:
+            etiqueta_numero = EtiquetaNumero(datos[num_linea])
+            retorno = etiqueta_numero.apertura()
+            if retorno != False:
+                operandos.append(retorno)
+                num_linea += 1
+                contador += 1
+            else:
+                print(f"Error en la linea {num_linea+1}")
+        num_linea += 1
+        contador += 1                    
+        return operandos, contador
+            
     def analizar(self):
         datos = []
         num_linea = 0
@@ -82,28 +99,52 @@ class VentanaPrincipal:
         #realizando analisis del archivo por medio de los automatas finitos
         etiqueta_tipo = EtiquetaTipo(datos[num_linea])
         if etiqueta_tipo.apertura() == True:
-            num_linea += 1
-            etiqueta_operacion = EtiquetaOperacion(datos[num_linea])
-            if etiqueta_operacion.apertura() == "Operacion=SUMA":
-                operacion = "Suma"
-                num_linea += 1
-            else:
-                print(f"Error en la linea {num_linea+1}")
-            
-            if operacion == "Suma":
-                operandos = []
+            num_linea += 1           
+             
+        #verificando el tipo de operacion 
+            while EtiquetaOperacion(datos[num_linea]).apertura() != False:
+                etiqueta_operacion = EtiquetaOperacion(datos[num_linea])
+                if etiqueta_operacion.apertura() == "Operacion=SUMA":
+                    operacion = "Suma"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=RESTA":
+                    operacion = "Resta"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=MULTIPLICACION":
+                    operacion = "Multiplicacion"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=DIVISION":
+                    operacion = "Division"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=POTENCIA":
+                    operacion = "Potencia"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=RAIZ":
+                    operacion = "Raiz"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=INVERSO":
+                    operacion = "Inverso"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=SENO":
+                    operacion = "Seno"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=COSENO":
+                    operacion = "Coseno"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=TANGENTE":
+                    operacion = "Tangente"
+                    num_linea += 1
+                elif etiqueta_operacion.apertura() == "Operacion=MOD":
+                    operacion = "Mod"
+                    num_linea += 1
+                else:
+                    print(f"Error en la linea {num_linea+1}")
                 
-                while EtiquetaOperacion(datos[num_linea]).cierre() != True:
-                    etiqueta_numero = EtiquetaNumero(datos[num_linea])
-                    retorno = etiqueta_numero.apertura()
-                    if retorno != False:
-                        operandos.append(retorno)
-                        num_linea += 1
-                    else:
-                        print(f"Error en la linea {num_linea+1}")
-                       
-                print(operandos)                 
-            
+        #tomando los datos de cada operacion segun su tipo
+                if operacion == "Suma":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador                         
         else:
             print(f"Error en la linea {num_linea+1}")
             
