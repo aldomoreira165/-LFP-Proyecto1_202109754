@@ -144,7 +144,49 @@ class VentanaPrincipal:
                 if operacion == "Suma":
                     operandos, contador = self.operaciones(num_linea, datos)
                     print(operandos)
-                    num_linea += contador                         
+                    num_linea += contador   
+                elif operacion == "Resta":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Multiplicacion":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Division":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador       
+                elif operacion == "Potencia":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Raiz":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Inverso":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Seno":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Coseno":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Tangente":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                elif operacion == "Mod":
+                    operandos, contador = self.operaciones(num_linea, datos)
+                    print(operandos)
+                    num_linea += contador
+                else:
+                     print(f"Error en la linea {num_linea+1}")             
         else:
             print(f"Error en la linea {num_linea+1}")
             

@@ -33,7 +33,7 @@ class EtiquetaOperacion:
                 if self.transicion == ">":
                     self.estado = 5
          
-        if cadena == "Operacion=SUMA":            
+        if cadena == "Operacion=SUMA" or cadena == "Operacion=RESTA" or cadena == "Operacion=MULTIPLICACION" or cadena == "Operacion=DIVISION" or cadena == "Operacion=POTENCIA" or cadena == "Operacion=RAIZ" or cadena == "Operacion=INVERSO" or cadena == "Operacion=SENO" or cadena == "Operacion=COSENO" or cadena == "Operacion=TANGENTE" or cadena == "Operacion=MOD":            
             return cadena
         else:
             return False
