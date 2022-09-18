@@ -1,5 +1,3 @@
-from cmath import sqrt
-import math
 import tkinter as tk
 from tkinter import scrolledtext as st
 import sys
@@ -8,7 +6,7 @@ from tkinter import filedialog as fd
 from tkinter import messagebox as mb 
 from etiqueta_tipo import EtiquetaTipo
 from etiqueta_operacion import EtiquetaOperacion
-from etiqueta_numero import EtiquetaNumero
+from operacion import Operacion
 
 class VentanaPrincipal:
     
@@ -68,131 +66,6 @@ class VentanaPrincipal:
             archivo.close()
             self.scrolledtext1.delete("1.0", tk.END)
             self.scrolledtext1.insert("1.0", contenido)
-          
-    #metodo para retonar los valores de cada operacion  
-    def operaciones(self, num_linea, archivo):
-        datos = archivo
-        contador = 0
-        operandos = []
-        while EtiquetaOperacion(datos[num_linea]).cierre() != True:
-            etiqueta_numero = EtiquetaNumero(datos[num_linea])
-            retorno = etiqueta_numero.apertura()
-            if retorno != False:
-                operandos.append(retorno)
-                num_linea += 1
-                contador += 1
-            else:
-                break
-        num_linea += 1
-        contador += 1
-        if retorno != False:                    
-            return operandos, contador
-        else:
-            return False
-    
-    #metodo para operar 
-    def operar(self, operacion, datos):
-        if operacion == "suma":
-            total = 0
-            cadena = ""
-            cont = 0
-            for i in datos:
-                cont += 1
-                cadena += str(i)  
-                if cont == (len(datos)):
-                    pass
-                else:
-                    cadena += "+" 
-                total += i
-            cadena += "="
-            cadena += str(round(total,2))
-        elif operacion == "resta":
-            total = 0
-            cadena = ""
-            cont = 0
-            for i in datos:
-                cont += 1
-                cadena += str(i)  
-                if cont == (len(datos)):
-                    pass
-                else:
-                    cadena += "-"
-                if cont == 1:
-                    total = i
-                else: 
-                    total -= i
-            cadena += "="
-            cadena += str(round(total,2))
-        elif operacion == "multiplicacion":
-            total = 0
-            cadena = ""
-            cont = 0
-            for i in datos:
-                cont += 1
-                cadena += str(i)  
-                if cont == (len(datos)):
-                    pass
-                else:
-                    cadena += "*" 
-                if cont == 1:
-                    total = i
-                else: 
-                    total *= i
-            cadena += "="
-            cadena += str(round(total,2))
-        elif operacion == "division":
-            total = 0
-            cadena = ""
-            cont = 0
-            for i in datos:
-                cont += 1
-                cadena += str(i)  
-                if cont == (len(datos)):
-                    pass
-                else:
-                    cadena += "/" 
-                if cont == 1:
-                    total = i
-                else: 
-                    total /= i
-            cadena += "="
-            cadena += str(round(total,2))
-        elif operacion == "potencia":
-            total = datos[0]**datos[1]
-            cadena = str(datos[0])+"^"+str(datos[1])+"="+str(round(total,2))
-        elif operacion == "raiz":
-            total = pow(datos[0], 1/datos[1])
-            cadena = "sqrt"+"("+str(datos[0])+")"+"="+str(round(total,2))
-        elif operacion == "inverso":
-            total = (1/datos[0])
-            cadena = str(datos[0])+"^-1"+"="+str(round(total,2))
-        elif operacion == "seno":
-            total = math.sin(datos[0])
-            cadena = "sin("+str(datos[0])+")"+"="+str(round(total,2))
-        elif operacion == "coseno":
-            total = math.cos(datos[0])
-            cadena = "cos("+str(datos[0])+")"+"="+str(round(total,2))
-        elif operacion == "tangente":
-            total = math.tan(datos[0])
-            cadena = "tan("+str(datos[0])+")"+"="+str(round(total,2))
-        elif operacion == "mod":
-            total = 0
-            cadena = ""
-            cont = 0
-            for i in datos:
-                cont += 1
-                cadena += str(i)  
-                if cont == (len(datos)):
-                    pass
-                else:
-                    cadena += "%" 
-                if cont == 1:
-                    total = i
-                else: 
-                    total %= i
-            cadena += "="
-            cadena += str(round(total,2))
-        return cadena
             
     def analizar(self):
         datos = []
@@ -211,138 +84,61 @@ class VentanaPrincipal:
         if etiqueta_tipo.apertura() == True:
             num_linea += 1           
              
-        #verificando el tipo de operacion 
-            while EtiquetaOperacion(datos[num_linea]).apertura() != False:
-                etiqueta_operacion = EtiquetaOperacion(datos[num_linea])
-                if etiqueta_operacion.apertura() == "Operacion=SUMA":
-                    operacion = "suma"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=RESTA":
-                    operacion = "resta"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=MULTIPLICACION":
-                    operacion = "multiplicacion"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=DIVISION":
-                    operacion = "division"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=POTENCIA":
-                    operacion = "potencia"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=RAIZ":
-                    operacion = "raiz"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=INVERSO":
-                    operacion = "inverso"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=SENO":
-                    operacion = "seno"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=COSENO":
-                    operacion = "coseno"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=TANGENTE":
-                    operacion = "tangente"
-                    num_linea += 1
-                elif etiqueta_operacion.apertura() == "Operacion=MOD":
-                    operacion = "mod"
-                    num_linea += 1
-                
-        #tomando los datos de cada operacion segun su tipo
-                if operacion == "suma":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
+        #verificando el tipo de operacion
+            estado = True
+            while estado == True:
+                if EtiquetaTipo(datos[num_linea]).cierre() == False:
+                    etiqueta_operacion = EtiquetaOperacion(datos[num_linea])
+                    if etiqueta_operacion.apertura() == "<Operacion=SUMA>":
+                        operacion = "suma"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=RESTA>":
+                        operacion = "resta"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=MULTIPLICACION>":
+                        operacion = "multiplicacion"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=DIVISION>":
+                        operacion = "division"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=POTENCIA>":
+                        operacion = "potencia"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=RAIZ>":
+                        operacion = "raiz"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=INVERSO>":
+                        operacion = "inverso"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=SENO>":
+                        operacion = "seno"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=COSENO>":
+                        operacion = "coseno"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=TANGENTE>":
+                        operacion = "tangente"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=MOD>":
+                        operacion = "mod"
+                        num_linea += 1
                     else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador   
-                elif operacion == "resta":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
+                        if etiqueta_operacion.cierre() == False and etiqueta_operacion.apertura() == False:
+                            print(f"Error en la linea {num_linea+1}")
+                            estado = False
+                        else:
+                            pass
+                        
+                    if estado == True:    
+                        #tomando los datos de cada operacion segun su tipo
+                        op = Operacion(num_linea, datos, operacion)
+                        resultado, num_linea = op.obtenerResultados()
+                        print(resultado)
                     else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "multiplicacion":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "division":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador       
-                elif operacion == "potencia":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "raiz":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "inverso":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "seno":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "coseno":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "tangente":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
-                elif operacion == "mod":
-                    if self.operaciones(num_linea, datos) != False:
-                        operandos, contador = self.operaciones(num_linea, datos)
-                    else:
-                        break
-                    resultado = self.operar(operacion, operandos)
-                    print(resultado)
-                    num_linea += contador
+                        pass
                 else:
-                     print(f"Error en la linea {num_linea+1}")
-            else:
-                pass         
+                    break
         else:
             print(f"Error en la linea {num_linea+1}")
             
-        
 aplicacion = VentanaPrincipal()

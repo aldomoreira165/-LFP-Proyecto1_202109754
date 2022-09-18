@@ -10,6 +10,7 @@ class EtiquetaOperacion:
             self.transicion = self.linea[i]
             if self.estado == 1:
                 if self.transicion == "<":
+                    cadena += self.transicion
                     self.estado = 2
             elif self.estado == 2:
                 if self.transicion.isalpha() and self.linea[i+1] != "=":
@@ -31,9 +32,10 @@ class EtiquetaOperacion:
                     self.estado = 5
             elif self.estado == 5:
                 if self.transicion == ">":
+                    cadena += self.transicion
                     self.estado = 5
          
-        if cadena == "Operacion=SUMA" or cadena == "Operacion=RESTA" or cadena == "Operacion=MULTIPLICACION" or cadena == "Operacion=DIVISION" or cadena == "Operacion=POTENCIA" or cadena == "Operacion=RAIZ" or cadena == "Operacion=INVERSO" or cadena == "Operacion=SENO" or cadena == "Operacion=COSENO" or cadena == "Operacion=TANGENTE" or cadena == "Operacion=MOD":            
+        if cadena == "<Operacion=SUMA>" or cadena == "<Operacion=RESTA>" or cadena == "<Operacion=MULTIPLICACION>" or cadena == "<Operacion=DIVISION>" or cadena == "<Operacion=POTENCIA>" or cadena == "<Operacion=RAIZ>" or cadena == "<Operacion=INVERSO>" or cadena == "<Operacion=SENO>" or cadena == "<Operacion=COSENO>" or cadena == "<Operacion=TANGENTE>" or cadena == "<Operacion=MOD>":            
             return cadena
         else:
             return False
