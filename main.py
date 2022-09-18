@@ -82,10 +82,13 @@ class VentanaPrincipal:
                 num_linea += 1
                 contador += 1
             else:
-                print(f"Error en la linea {num_linea+1}")
+                break
         num_linea += 1
-        contador += 1                    
-        return operandos, contador
+        contador += 1
+        if retorno != False:                    
+            return operandos, contador
+        else:
+            return False
     
     #metodo para operar 
     def operar(self, operacion, datos):
@@ -247,62 +250,97 @@ class VentanaPrincipal:
                 
         #tomando los datos de cada operacion segun su tipo
                 if operacion == "suma":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador   
                 elif operacion == "resta":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "multiplicacion":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "division":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador       
                 elif operacion == "potencia":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "raiz":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "inverso":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "seno":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "coseno":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "tangente":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 elif operacion == "mod":
-                    operandos, contador = self.operaciones(num_linea, datos)
+                    if self.operaciones(num_linea, datos) != False:
+                        operandos, contador = self.operaciones(num_linea, datos)
+                    else:
+                        break
                     resultado = self.operar(operacion, operandos)
                     print(resultado)
                     num_linea += contador
                 else:
-                     print(f"Error en la linea {num_linea+1}")             
+                     print(f"Error en la linea {num_linea+1}")
+            else:
+                pass         
         else:
             print(f"Error en la linea {num_linea+1}")
             
