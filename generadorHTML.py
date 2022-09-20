@@ -1,11 +1,10 @@
-from distutils.log import error
 
-class EtiquetaTipo:
-
-    def __init__(self, linea):
+class generadorHTML:
+    
+    def __init__(self, linea ):
         self.linea = linea
-
-    def apertura(self):
+        
+    def textoApertura(self):
         cadena = ""
         self.estado = 1
         for i in range(0, len(self.linea)):
@@ -27,12 +26,12 @@ class EtiquetaTipo:
                 if self.transicion == ">": 
                     cadena += self.transicion
                     self.estado = 3
-        if cadena == "<Tipo>":
+        if cadena == "<Texto>":
             return True
         else:
             return False
         
-    def cierre(self):
+    def textoCierre(self):
         cadena = ""
         self.estado = 1
         for i in range(0, len(self.linea)):
@@ -58,7 +57,7 @@ class EtiquetaTipo:
                 if self.transicion == ">":
                     cadena += self.transicion 
                     self.estado = 4
-        if cadena == "</Tipo>":
+        if cadena == "</Texto>":
             return True
         else:
             return False

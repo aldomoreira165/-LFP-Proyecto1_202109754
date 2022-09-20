@@ -7,6 +7,7 @@ from tkinter import messagebox as mb
 from etiqueta_tipo import EtiquetaTipo
 from etiqueta_operacion import EtiquetaOperacion
 from operacion import Operacion
+from generadorHTML import generadorHTML
 
 class VentanaPrincipal:
     
@@ -84,43 +85,97 @@ class VentanaPrincipal:
         if etiqueta_tipo.apertura() == True:
             num_linea += 1           
              
-        #verificando el tipo de operacion
+            #iniciando creacion de archivo html
+            linea_html = 0
+            texto = " "
+            #buscando apertura de etiqueta texto
+            while generadorHTML(datos[linea_html]).textoApertura() == False:
+                    linea_html += 1
+        
+            if generadorHTML(datos[linea_html]).textoApertura() == True:
+                linea_html += 1
+                while generadorHTML(datos[linea_html]).textoCierre() == False:
+                    texto += datos[linea_html]
+                    linea_html += 1
+            else:
+                pass
+            
+            
+            html = open("resultados.html", "w")
+            html.write("<title>Resultados</title>")
+            html.write("<h1>Generacion Archivo HTML</h1>")
+            html.write(f"<p>{texto}</p>")
             estado = True
+            csuma = 0
+            cresta = 0
+            cmulti = 0
+            cdivi = 0
+            cpote = 0
+            craiz = 0
+            cinverso = 0
+            cseno = 0
+            ccoseno = 0
+            ctan = 0
+            cmod = 0
+            
+            #verificando el tipo de operacion
             while estado == True:
                 if EtiquetaTipo(datos[num_linea]).cierre() == False:
                     etiqueta_operacion = EtiquetaOperacion(datos[num_linea])
                     if etiqueta_operacion.apertura() == "<Operacion=SUMA>":
+                        csuma += 1
                         operacion = "suma"
                         num_linea += 1
+                        html.write(f"<p>Operacion {operacion} {csuma}:</p>")
                     elif etiqueta_operacion.apertura() == "<Operacion=RESTA>":
+                        cresta += 1
                         operacion = "resta"
+                        html.write(f"<p>Operacion {operacion} {cresta}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=MULTIPLICACION>":
+                        cmulti += 1
                         operacion = "multiplicacion"
+                        html.write(f"<p>Operacion {operacion} {cmulti}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=DIVISION>":
+                        cdivi += 1
                         operacion = "division"
+                        html.write(f"<p>Operacion {operacion} {cdivi}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=POTENCIA>":
+                        cpote += 1
                         operacion = "potencia"
+                        html.write(f"<p>Operacion {operacion} {cpote}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=RAIZ>":
+                        craiz += 1
                         operacion = "raiz"
+                        html.write(f"<p>Operacion {operacion} {craiz}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=INVERSO>":
+                        cinverso += 1
                         operacion = "inverso"
+                        html.write(f"<p>Operacion {operacion} {cinverso}</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=SENO>":
+                        cseno += 1
                         operacion = "seno"
+                        html.write(f"<p>Operacion {operacion} {cseno}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=COSENO>":
+                        ccoseno += 1
                         operacion = "coseno"
+                        html.write(f"<p>Operacion {operacion} {ccoseno}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=TANGENTE>":
+                        ctan += 1
                         operacion = "tangente"
+                        html.write(f"<p>Operacion {operacion} {ctan}:</p>")
                         num_linea += 1
                     elif etiqueta_operacion.apertura() == "<Operacion=MOD>":
+                        cmod += 1
                         operacion = "mod"
+                        html.write(f"<p>Operacion {operacion} {cmod}:</p>")
                         num_linea += 1
                     else:
                         if etiqueta_operacion.cierre() == False and etiqueta_operacion.apertura() == False:
@@ -133,12 +188,14 @@ class VentanaPrincipal:
                         #tomando los datos de cada operacion segun su tipo
                         op = Operacion(num_linea, datos, operacion)
                         resultado, num_linea = op.obtenerResultados()
-                        print(resultado)
+                        html.write(f"<p>{resultado}</p>")
                     else:
                         pass
                 else:
                     break
         else:
             print(f"Error en la linea {num_linea+1}")
+            
+        html.close()
             
 aplicacion = VentanaPrincipal()
