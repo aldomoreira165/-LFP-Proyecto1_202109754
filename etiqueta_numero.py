@@ -8,6 +8,8 @@ class EtiquetaNumero:
         cadenaUno = ""
         cadenaDos = ""
         numero = ""
+        positivo = False
+        negativo = False
         self.estado = 1
         
         for i in range(0, len(self.linea)):
@@ -32,7 +34,10 @@ class EtiquetaNumero:
                         self.estado = 5
             elif self.estado == 4:
                 if self.transicion == "+" or self.transicion == "-":
-                    numero += self.transicion
+                    if self.transicion == "+":
+                        positivo = True
+                    else:
+                        negativo = True
                     self.estado = 5
             elif self.estado == 5:
                 if self.transicion.isnumeric() and self.linea[i+1] != "." and self.linea[i+1] != "<":
@@ -43,7 +48,7 @@ class EtiquetaNumero:
                     self.estado = 6
                 elif self.transicion.isnumeric() and self.linea[i+1] == "<":
                     numero += self.transicion
-                    numero = int(numero)
+                    numero = numero
                     self.estado = 7
             elif self.estado == 6:
                 if self.transicion == ".":
@@ -55,7 +60,7 @@ class EtiquetaNumero:
                     self.estado = 8
                 elif self.transicion.isnumeric() and self.linea[i+1] == "<":
                     numero += self.transicion
-                    numero = float(numero)
+                    numero = numero
                     self.estado = 7
             elif self.estado == 7:
                 if self.transicion == "<":
@@ -76,9 +81,15 @@ class EtiquetaNumero:
                 if self.transicion == ">":
                     cadenaDos += self.transicion
                     self.estado = 12
-                                    
-        if cadenaUno == "<Numero>" and cadenaDos == "</Numero>":
-            return numero
+                    
+        valor = numero.replace(".", "", 1).isdigit()
+        if valor == True and positivo == True:
+            numero = float(numero)
+        elif valor == True and negativo == True:
+            numero = float(numero)*(-1)
+                                                
+        if cadenaUno == "<Numero>" and cadenaDos == "</Numero>" and valor == True:
+            return float(numero)
         else:
             return False
         

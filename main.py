@@ -29,7 +29,6 @@ class VentanaPrincipal:
         menu_archivo.add_command(label="Guardar", command=self.guardar)
         menu_archivo.add_command(label="Guardar Como", command=self.guardar_como)
         menu_archivo.add_command(label="Analizar", command=self.analizar)
-        menu_archivo.add_command(label="Errores")
         menu_archivo.add_command(label="Salir", command=self.salir)
         barra_menus.add_cascade(menu=menu_archivo, label="Archivo")
         
@@ -80,6 +79,17 @@ class VentanaPrincipal:
                 linea = linea.replace("\t", "")
                 datos.append(linea)
         
+        #creando html de errores
+        html_errores = open("ERRORES_202109754.html", "w")
+        html_errores.write("<title>Errores</title>")
+        html_errores.write("<h1>Generacion Archivo de Errores HTML</h1>")
+        html_errores.write("<table border=1>")
+        html_errores.write("<tr><th>Tipo</th><th>Fila</th></tr>")
+        
+        html = open("RESULTADOS_202109754.html", "w")
+        html.write("<title>Resultados</title>")
+        html.write("<h1>Generacion Archivo HTML</h1>")
+        
         #realizando analisis del archivo por medio de los automatas finitos
         etiqueta_tipo = EtiquetaTipo(datos[num_linea])
         if etiqueta_tipo.apertura() == True:
@@ -88,6 +98,7 @@ class VentanaPrincipal:
             #iniciando creacion de archivo html
             linea_html = 0
             texto = " "
+                
             #buscando apertura de etiqueta texto
             while generadorHTML(datos[linea_html]).textoApertura() == False:
                     linea_html += 1
@@ -100,10 +111,6 @@ class VentanaPrincipal:
             else:
                 pass
             
-            
-            html = open("resultados.html", "w")
-            html.write("<title>Resultados</title>")
-            html.write("<h1>Generacion Archivo HTML</h1>")
             html.write(f"<p>{texto}</p>")
             estado = True
             csuma = 0
@@ -117,7 +124,7 @@ class VentanaPrincipal:
             ccoseno = 0
             ctan = 0
             cmod = 0
-            
+                        
             #verificando el tipo de operacion
             while estado == True:
                 if EtiquetaTipo(datos[num_linea]).cierre() == False:
@@ -179,7 +186,7 @@ class VentanaPrincipal:
                         num_linea += 1
                     else:
                         if etiqueta_operacion.cierre() == False and etiqueta_operacion.apertura() == False:
-                            print(f"Error en la linea {num_linea+1}")
+                            html_errores.write(f"<tr><td>Error</td><td>{num_linea+1}</td></tr>")
                             estado = False
                         else:
                             pass
@@ -194,8 +201,10 @@ class VentanaPrincipal:
                 else:
                     break
         else:
-            print(f"Error en la linea {num_linea+1}")
-            
+            html_errores.write(f"<tr><td>Error</td><td>{num_linea+1}</td></tr>")
+        #cerrando documentos html
+        html_errores.write("</table>")  
         html.close()
+        html_errores.close()
             
 aplicacion = VentanaPrincipal()
