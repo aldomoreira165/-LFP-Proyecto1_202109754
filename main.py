@@ -8,6 +8,8 @@ from etiqueta_tipo import EtiquetaTipo
 from etiqueta_operacion import EtiquetaOperacion
 from operacion import Operacion
 from generadorHTML import generadorHTML
+from tkinter import messagebox
+from temas_ayuda import temas_ayuda
 
 class VentanaPrincipal:
     
@@ -20,9 +22,11 @@ class VentanaPrincipal:
         self.ventana.mainloop()
         self.nombre_archivo = None
         
+    def abrir_temas_ayuda(self):
+        ventana = temas_ayuda()
+        
     def agregar_menu(self):
         barra_menus = tk.Menu(self.ventana)
-        
         #cascada de menu archivo
         menu_archivo = tk.Menu(barra_menus, tearoff=False)
         menu_archivo.add_command(label="Abrir", command=self.abrir)
@@ -36,10 +40,10 @@ class VentanaPrincipal:
         menu_ayuda = tk.Menu(barra_menus, tearoff=False)
         menu_ayuda.add_command(label="Manual de Usuario")
         menu_ayuda.add_command(label="Manual Técnico")
-        menu_ayuda.add_command(label="Temas de Ayuda")
+        menu_ayuda.add_command(label="Temas de Ayuda", command=self.abrir_temas_ayuda)
         barra_menus.add_cascade(menu=menu_ayuda, label="Ayuda")
         
-        self.ventana.config(menu=barra_menus)
+        self.ventana.config(menu=barra_menus, bg="#8FEBD6")
 
     def salir(self):
         sys.exit(0)
@@ -85,7 +89,8 @@ class VentanaPrincipal:
         html_errores.write("<h1>Generacion Archivo de Errores HTML</h1>")
         html_errores.write("<table border=1>")
         html_errores.write("<tr><th>Tipo</th><th>Fila</th></tr>")
-        
+
+        #creando html de resultados        
         html = open("RESULTADOS_202109754.html", "w")
         html.write("<title>Resultados</title>")
         html.write("<h1>Generacion Archivo HTML</h1>")
@@ -187,6 +192,7 @@ class VentanaPrincipal:
                     else:
                         if etiqueta_operacion.cierre() == False and etiqueta_operacion.apertura() == False:
                             html_errores.write(f"<tr><td>Error</td><td>{num_linea+1}</td></tr>")
+                            messagebox.showerror(message="Verifique los detalles del error", title="Error")
                             estado = False
                         else:
                             pass
@@ -202,9 +208,12 @@ class VentanaPrincipal:
                     break
         else:
             html_errores.write(f"<tr><td>Error</td><td>{num_linea+1}</td></tr>")
+            messagebox.showerror(message="Verifique los detalles del error", title="Error")
+            
         #cerrando documentos html
         html_errores.write("</table>")  
         html.close()
         html_errores.close()
+        messagebox.showinfo(message="Análisis terminado correctamente")
             
 aplicacion = VentanaPrincipal()
