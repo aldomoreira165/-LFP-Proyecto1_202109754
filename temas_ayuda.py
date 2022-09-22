@@ -23,5 +23,3 @@ class temas_ayuda:
         carnet.place(x = 130, y=125)
         #cambiando color
         self.ventana.configure(bg="#8FEBD6")
-
-a = temas_ayuda()

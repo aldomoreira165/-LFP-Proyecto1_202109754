@@ -1,6 +1,8 @@
+from importlib.resources import path
 import tkinter as tk
-from tkinter import scrolledtext as st
+import subprocess
 import sys
+from tkinter import scrolledtext as st
 from tkinter.font import BOLD
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb 
@@ -24,7 +26,15 @@ class VentanaPrincipal:
         
     def abrir_temas_ayuda(self):
         ventana = temas_ayuda()
-        
+    
+    def abrir_manual_usuario(self):
+        path = "Manuales/Manual de Usuario.pdf"
+        subprocess.Popen([path], shell=True)
+    
+    def abrir_manual_tecnico(self):
+        path = "Manuales/Manual Técnico.pdf"
+        subprocess.Popen([path], shell=True)
+    
     def agregar_menu(self):
         barra_menus = tk.Menu(self.ventana)
         #cascada de menu archivo
@@ -38,8 +48,8 @@ class VentanaPrincipal:
         
         #cascada de menu ayuda
         menu_ayuda = tk.Menu(barra_menus, tearoff=False)
-        menu_ayuda.add_command(label="Manual de Usuario")
-        menu_ayuda.add_command(label="Manual Técnico")
+        menu_ayuda.add_command(label="Manual de Usuario", command=self.abrir_manual_usuario)
+        menu_ayuda.add_command(label="Manual Técnico", command=self.abrir_manual_tecnico)
         menu_ayuda.add_command(label="Temas de Ayuda", command=self.abrir_temas_ayuda)
         barra_menus.add_cascade(menu=menu_ayuda, label="Ayuda")
         
