@@ -12,23 +12,95 @@ class Operacion:
     #metodo para retonar los valores de cada operacion  
     def obtenerValores(self, num_linea):
         contador = 0
+        veces = 0
         operandos = []
         while EtiquetaOperacion(self.datos[num_linea]).cierre() != True:
-            etiqueta_numero = EtiquetaNumero(self.datos[num_linea])
-            retorno = etiqueta_numero.apertura()
-            if retorno != False:
-                operandos.append(retorno)
-                num_linea += 1
-                contador += 1
+            if EtiquetaOperacion(self.datos[num_linea]).apertura() == False:
+                etiqueta_numero = EtiquetaNumero(self.datos[num_linea])
+                retorno = etiqueta_numero.apertura()
+                if retorno != False:
+                    operandos.append(retorno)
+                    num_linea += 1
+                    contador += 1
+                else:
+                    break
             else:
-                break
+                if veces == 0:
+                    etiqueta_operacion = EtiquetaOperacion(self.datos[num_linea])
+                    if etiqueta_operacion.apertura() == "<Operacion=SUMA>":
+                        operacion = "suma"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=RESTA>":
+                        operacion = "resta"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=MULTIPLICACION>":
+                        operacion = "multiplicacion"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=DIVISION>":
+                        operacion = "division"
+                        num_linea += 1
+                    elif etiqueta_operacion.apertura() == "<Operacion=MOD>":
+                        operacion = "mod"
+                        num_linea += 1
+                    valores, cont = self.obtenerValores(num_linea)
+                    resultado = self.retornar_resultado_anidado(operacion, valores)
+                    num_linea += cont
+                    print("ejecutado metodo")
+                    operandos.append(resultado)
         num_linea += 1
         contador += 1
         if retorno != False:                    
             return [operandos, contador]
         else:
             return [False, contador]
-    
+        
+    #metodo retornar detos ya operados
+    def retornar_resultado_anidado(self, operacion,datos):
+        total = 0
+        cont = 0
+        if operacion == "suma":
+            total = 0
+            cont = 0
+            for i in datos: 
+                total += i
+        elif operacion == "resta":
+            total = 0
+            cont = 0
+            for i in datos:
+                cont += 1 
+                if cont == 1:
+                    total = i
+                else: 
+                    total -= i
+        elif operacion == "multiplicacion":
+            total = 0
+            cont = 0
+            for i in datos:
+                cont += 1
+                if cont == 1:
+                    total = i
+                else: 
+                    total *= i
+        elif operacion == "division":
+            total = 0
+            cont = 0
+            for i in datos:
+                cont += 1 
+                if cont == 1:
+                    total = i
+                else: 
+                    total /= i
+        elif operacion == "mod":
+            total = 0
+            cont = 0
+            for i in datos:
+                cont += 1 
+                if cont == 1:
+                    total = i
+                else: 
+                    total %= i
+        return total
+        
     #metodo para operar 
     def operar(self, datos):
         if self.operacion == "suma":

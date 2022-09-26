@@ -85,6 +85,7 @@ class VentanaPrincipal:
         datos = []
         num_linea = 0
         operacion = None
+        total_lineas = 0
         with open(self.nombre_archivo, encoding="utf-8") as archivo:
             lineas = archivo.readlines()
             for linea in lineas:
@@ -92,7 +93,7 @@ class VentanaPrincipal:
                 linea = linea.replace("\n", "")
                 linea = linea.replace("\t", "")
                 datos.append(linea)
-        
+                
         #creando html de errores
         html_errores = open("ERRORES_202109754.html", "w")
         html_errores.write("<title>Errores</title>")
@@ -116,7 +117,7 @@ class VentanaPrincipal:
                 
             #buscando apertura de etiqueta texto
             while generadorHTML(datos[linea_html]).textoApertura() == False:
-                    linea_html += 1
+                linea_html += 1
         
             if generadorHTML(datos[linea_html]).textoApertura() == True:
                 linea_html += 1
